@@ -3,14 +3,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Union
 from pydantic import BaseModel
-from .services import insert_vacante, get_vacante
+from .services import insert_vacante, get_vacante, delete_vacante
 
 
 # app = APIRouter(responses={})
 router = APIRouter()
 
 
-class Item(BaseModel):
+class ItemCreate(BaseModel):
 
     position_name: str
     company_name: str
@@ -19,9 +19,14 @@ class Item(BaseModel):
     vacancy_link: str
     required_skills: list[dict]
 
+class ItemDelete(BaseModel):
+
+    position_name: str
+    company_name: str
+
 
 @router.post("/create_vacante")
-def create_object(item: Item):
+def create_object(item: ItemCreate):
 
     insert_response, code, message = insert_vacante(item)
     if not insert_response:
@@ -40,6 +45,10 @@ def update_object():
     return {"op": "update_object"}
 
 
-@router.get("/delete_vacante")
-def delete_object():
-    return {"op": "delete_object"}
+@router.delete("/delete_vacante")
+def delete_object(item: ItemDelete):
+    # Eliminar por vacante y empresa
+    insert_response, code, message = delete_vacante(item)
+    if not insert_response:
+        raise HTTPException(status_code=code, detail=message)
+    raise HTTPException(status_code=code, detail=message)
