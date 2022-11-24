@@ -1,9 +1,8 @@
 
 # from fastapi import FastAPI
-from fastapi import APIRouter, Depends, HTTPException
-from typing import Union
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
-from .services import insert_vacante, get_vacante, delete_vacante
+from .services import insert_vacante, get_vacante, delete_vacante, update_vacante
 
 
 # app = APIRouter(responses={})
@@ -18,6 +17,7 @@ class ItemCreate(BaseModel):
     currency: str
     vacancy_link: str
     required_skills: list[dict]
+
 
 class ItemDelete(BaseModel):
 
@@ -40,8 +40,11 @@ def read_object():
     return {"op": "read_object"}
 
 
-@router.get("/update_vacante")
-def update_object():
+@router.post("/update_vacante")
+async def update_object(item: Request):
+    item = await item.json()
+    import pdb; pdb.set_trace()
+    insert_response, code, message = update_vacante(item)
     return {"op": "update_object"}
 
 

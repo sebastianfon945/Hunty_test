@@ -44,11 +44,21 @@ def get_vacante(skills):
         return False, 400, message
 
 
-def update_vacante(skills):
-    # pipeline = 
+def update_vacante(item):
+    nombre_vacante = item.get('position_name', '')
+    nombre_empresa = item.get('company_name', '')
     try:
-        vacante_results = Vacante.objects()
-        print(vacante_results.to_mongo().to_dict())
+        vacante = Vacante.objects(PositionName=nombre_vacante,
+                                  CompanyName=nombre_empresa).first()
+        salary = item.get('salary', '')
+        currency = item.get('currency', '')
+        required_skills = item.get('required_skills', '')
+        vacante.update(Salary=salary if salary else vacante.Salary,
+                       Currency=currency if currency else vacante.Currency,
+                       RequiredSkills=required_skills if required_skills else vacante.RequiredSkills, # noqa
+                       )
+        vacante.reload()
+        print(vacante.to_mongo().to_dict())
         message = "Escritura de datos correcta"
         return True, 200, message
 
