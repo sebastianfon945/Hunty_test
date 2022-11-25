@@ -6,21 +6,21 @@ from fastapi import APIRouter, Depends, HTTPException
 router = APIRouter()
 
 
-@router.get("/create")
+@router.get("/create_empresa")
 def create_object():
     return {"op": "create_object"}
 
 
-@router.get("/read")
+@router.get("/read_empresa")
 def read_object():
     return {"op": "read_object"}
 
 
-@router.get("/update")
+@router.get("/update_empresa")
 def update_object():
     return {"op": "update_object"}
 
 
-@router.get("/delete")
+@router.get("/delete_empresa")
 def delete_object():
     return {"op": "delete_object"}

@@ -2,7 +2,7 @@
 # from fastapi import FastAPI
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
-from .services import insert_vacante, get_vacante, delete_vacante, update_vacante
+from .services_vacante import insert_vacante, get_vacante, delete_vacante, update_vacante
 
 
 # app = APIRouter(responses={})
