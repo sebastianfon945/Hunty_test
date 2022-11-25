@@ -1,5 +1,5 @@
 import uuid
-from mongoengine import Document, StringField, IntField, ListField, EmailField
+from mongoengine import Document, StringField, IntField, ListField
 
 
 class Vacante(Document):
